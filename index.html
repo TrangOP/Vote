@@ -8,11 +8,16 @@
 <style>
 * { box-sizing: border-box; }
 
-body {
+html, body {
+  width: 100%;
+  height: 100%;
   margin: 0;
+}
+
+body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: radial-gradient(circle at top, #1a1f3c, #050816);
-  color: #fff;
+  color: #ffffff;
   min-height: 100dvh;
   display: flex;
   justify-content: center;
@@ -22,189 +27,4 @@ body {
 .container {
   width: 100%;
   max-width: 460px;
-  padding: 20px 14px;
-}
-
-h1 {
-  text-align: center;
-  font-size: clamp(20px, 6vw, 30px);
-  margin: 0;
-}
-
-.subtitle {
-  text-align: center;
-  font-size: 13px;
-  opacity: 0.8;
-  margin-bottom: 20px;
-}
-
-/* FORM */
-label {
-  display: block;
-  margin-top: 14px;
-  font-size: 14px;
-}
-
-select {
-  width: 100%;
-  margin-top: 6px;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  font-size: 14px;
-}
-
-/* BUTTON */
-button {
-  width: 100%;
-  margin-top: 22px;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #00f2ff, #ffd700);
-  color: #000;
-  cursor: pointer;
-}
-
-button[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* MESSAGE */
-.result {
-  margin-top: 18px;
-  font-size: 14px;
-  text-align: center;
-  opacity: 0.9;
-}
-
-/* LEADERBOARD */
-.leaderboard {
-  margin-top: 18px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 12px;
-  padding: 14px;
-  font-size: 14px;
-}
-
-.leaderboard div {
-  margin-top: 6px;
-}
-
-.leaderboard strong {
-  color: #ffd700;
-}
-
-/* RESET (BTC) */
-.reset {
-  margin-top: 12px;
-  text-align: center;
-  font-size: 11px;
-  opacity: 0.4;
-  cursor: pointer;
-}
-</style>
-</head>
-
-<body>
-<div class="container">
-
-  <h1>👑 VOTE KING & QUEEN</h1>
-  <div class="subtitle">Future Of Code – mỗi thiết bị vote 1 lần</div>
-
-  <label>Vote KING</label>
-  <select id="king">
-    <option value="">-- Chọn KING --</option>
-    <option>Nguyễn Văn A</option>
-    <option>Trần Văn B</option>
-    <option>Lê Văn C</option>
-  </select>
-
-  <label>Vote QUEEN</label>
-  <select id="queen">
-    <option value="">-- Chọn QUEEN --</option>
-    <option>Nguyễn Thị A</option>
-    <option>Trần Thị B</option>
-    <option>Lê Thị C</option>
-  </select>
-
-  <button id="btnVote" onclick="vote()">GỬI VOTE</button>
-
-  <div class="result" id="msg"></div>
-
-  <!-- LEADERBOARD – BTC -->
-  <div class="leaderboard" id="board">
-    <div><strong>👑 KING:</strong> <span id="topKing">–</span></div>
-    <div><strong>👑 QUEEN:</strong> <span id="topQueen">–</span></div>
-  </div>
-
-  <!-- RESET BTC (xoá khi chạy thật nếu cần) -->
-  <div class="reset" onclick="resetVote()">Reset (BTC)</div>
-
-</div>
-
-<script>
-let data = JSON.parse(localStorage.getItem("voteData")) || {
-  king: {},
-  queen: {}
-};
-
-let voted = localStorage.getItem("voted");
-
-const msg = document.getElementById("msg");
-const btn = document.getElementById("btnVote");
-
-if (voted) {
-  btn.disabled = true;
-  msg.innerText = "Bạn đã vote rồi. Cảm ơn!";
-}
-
-function vote() {
-  if (voted) return;
-
-  const k = king.value;
-  const q = queen.value;
-
-  if (!k || !q) {
-    alert("Vui lòng chọn KING và QUEEN!");
-    return;
-  }
-
-  data.king[k] = (data.king[k] || 0) + 1;
-  data.queen[q] = (data.queen[q] || 0) + 1;
-
-  localStorage.setItem("voteData", JSON.stringify(data));
-  localStorage.setItem("voted", "yes");
-
-  btn.disabled = true;
-  msg.innerText = "Vote thành công! 🎉";
-
-  updateBoard();
-}
-
-function updateBoard() {
-  const topK = Object.entries(data.king).sort((a,b)=>b[1]-a[1])[0];
-  const topQ = Object.entries(data.queen).sort((a,b)=>b[1]-a[1])[0];
-
-  document.getElementById("topKing").innerText =
-    topK ? `${topK[0]} (${topK[1]} vote)` : "–";
-
-  document.getElementById("topQueen").innerText =
-    topQ ? `${topQ[0]} (${topQ[1]} vote)` : "–";
-}
-
-function resetVote() {
-  if (!confirm("Reset toàn bộ vote?")) return;
-  localStorage.removeItem("voteData");
-  localStorage.removeItem("voted");
-  location.reload();
-}
-
-updateBoard();
-</script>
-
-</body>
-</html>
+  padding:
