@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Vote King & Queen – Future Of Code</title>
+<title>Best Outfit Award – Future Of Code</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -49,7 +49,7 @@ h1 {
 
 .subtitle {
   font-size: 13px;
-  opacity: 0.8;
+  opacity: 0.85;
   margin-bottom: 18px;
 }
 
@@ -70,7 +70,7 @@ input {
   font-size: 14px;
 }
 
-/* ===== BUTTON (ÔM CHỮ) ===== */
+/* ===== BUTTON ===== */
 button {
   margin-top: 22px;
   padding: 12px 22px;
@@ -122,13 +122,11 @@ button[disabled] {
   color: #ffd700;
 }
 
-/* ===== RESET BTC ===== */
-.reset {
-  margin-top: 12px;
+/* ===== FOOT NOTE ===== */
+.footer-note {
+  margin-top: 16px;
   font-size: 11px;
-  opacity: 0.4;
-  cursor: pointer;
-  text-align: center;
+  opacity: 0.55;
 }
 </style>
 </head>
@@ -143,43 +141,43 @@ button[disabled] {
          onerror="this.style.display='none'">
   </div>
 
-  <h1>👑 VOTE KING & QUEEN</h1>
-  <div class="subtitle">Future Of Code – mỗi thiết bị vote 1 lần</div>
+  <h1>🏆 BEST OUTFIT AWARD</h1>
+  <div class="subtitle">Future Of Code</div>
 
-  <label>Họ tên KING</label>
-  <input id="king" placeholder="Nhập họ và tên đầy đủ">
+  <label>KING</label>
+  <input id="king" placeholder="Nhập tên ứng viên KING">
 
-  <label>Họ tên QUEEN</label>
-  <input id="queen" placeholder="Nhập họ và tên đầy đủ">
+  <label>QUEEN</label>
+  <input id="queen" placeholder="Nhập tên ứng viên QUEEN">
 
   <button id="btnVote" onclick="vote()">GỬI VOTE</button>
 
   <div class="result" id="msg"></div>
 
-  <!-- LEADERBOARD – BTC -->
+  <!-- LEADERBOARD -->
   <div class="leaderboard">
     <div><strong>👑 KING:</strong> <span id="topKing">–</span></div>
     <div><strong>👑 QUEEN:</strong> <span id="topQueen">–</span></div>
   </div>
 
-  <!-- RESET BTC -->
-  <div class="reset" onclick="resetVote()">Reset (BTC)</div>
+  <!-- NOTE CUỐI -->
+  <div class="footer-note">
+    – mỗi thiết bị vote 1 lần
+  </div>
 
 </div>
 
 <script>
-/* ===== DATA ===== */
 let data = JSON.parse(localStorage.getItem("voteData")) || {
   king: {},
   queen: {}
 };
 
-let voted = localStorage.getItem("votedOnce"); // 👈 khoá 1 lần
+let voted = localStorage.getItem("votedOnce");
 
 const msg = document.getElementById("msg");
 const btn = document.getElementById("btnVote");
 
-/* Nếu đã vote rồi */
 if (voted) {
   btn.disabled = true;
   msg.innerText = "Bạn đã vote rồi. Cảm ơn!";
@@ -197,7 +195,7 @@ function vote() {
   const q = normalizeName(document.getElementById("queen").value);
 
   if (!k || !q) {
-    alert("Vui lòng nhập đầy đủ họ tên KING và QUEEN!");
+    alert("Vui lòng nhập tên KING và QUEEN!");
     return;
   }
 
@@ -205,7 +203,7 @@ function vote() {
   data.queen[q] = (data.queen[q] || 0) + 1;
 
   localStorage.setItem("voteData", JSON.stringify(data));
-  localStorage.setItem("votedOnce", "yes"); // 👈 đánh dấu đã vote
+  localStorage.setItem("votedOnce", "yes");
 
   btn.disabled = true;
   msg.innerText = "Vote thành công! 🎉";
@@ -222,13 +220,6 @@ function updateBoard() {
 
   document.getElementById("topQueen").innerText =
     topQ ? `${topQ[0]} (${topQ[1]} vote)` : "–";
-}
-
-function resetVote() {
-  if (!confirm("Reset toàn bộ vote?")) return;
-  localStorage.removeItem("voteData");
-  localStorage.removeItem("votedOnce");
-  location.reload();
 }
 
 updateBoard();
