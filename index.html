@@ -145,10 +145,10 @@ button[disabled] {
   <div class="subtitle">Future Of Code</div>
 
   <label>KING</label>
-  <input id="king" placeholder="Nhập tên ứng viên KING">
+  <input id="king" placeholder="Nhập họ tên đầy đủ">
 
   <label>QUEEN</label>
-  <input id="queen" placeholder="Nhập tên ứng viên QUEEN">
+  <input id="queen" placeholder="Nhập họ tên đầy đủ">
 
   <button id="btnVote" onclick="vote()">GỬI VOTE</button>
 
@@ -162,7 +162,7 @@ button[disabled] {
 
   <!-- NOTE CUỐI -->
   <div class="footer-note">
-    – mỗi thiết bị vote 1 lần
+    Mỗi thiết bị vote 1 lần
   </div>
 
 </div>
@@ -195,7 +195,7 @@ function vote() {
   const q = normalizeName(document.getElementById("queen").value);
 
   if (!k || !q) {
-    alert("Vui lòng nhập tên KING và QUEEN!");
+    alert("Vui lòng nhập họ tên đầy đủ cho KING và QUEEN!");
     return;
   }
 
